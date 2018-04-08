@@ -4,10 +4,12 @@ import mongoose from 'mongoose';
 import auth from './routes/auth';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
+import Promise from 'bluebird';
 
 dotenv.config();
 const app = express();
 app.use(bodyParser.json());
+mongoose.Promise=Promise;
 //mongoose.connect("mongodb://localhost/bookworm",{useMongoClient: true});
 mongoose.connect(process.env.MONGODB_URL);
 
