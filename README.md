@@ -1,4 +1,4 @@
-This is and ExpressJS  Backend server for react-login-app repo
+This is an ExpressJS  Backend server for react-login-app repo
 
 You need to install mongodb and start mongodb server (mongodb://127.0.0.1:27017)
 then insert table using below commands
