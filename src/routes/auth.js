@@ -5,8 +5,8 @@ import User from '../models/User';
 const router = express.Router();
     
 router.post("/", (req, res) => 
-{   console.log('server/route/auth.js/credentials req=',req); //---visible only in sonsole of server-command prompt
-    console.log('server/route/auth.js/credentials res=',res);
+{  // console.log('server/route/auth.js/credentials req=',req); //---visible only in sonsole of server-command prompt
+  //  console.log('server/route/auth.js/credentials res=',res);
     console.log('server/route/auth.js/credentials req.body=',req.body);
     const { credentials } = req.body;
     
@@ -21,5 +21,11 @@ router.post("/", (req, res) =>
       }
     });
   });
+
+router.post("/confirmation", (req, res) => 
+{ const token = req.body.token;
+  User.findOneAndUpdate( { confirmationToken: token },{ confirmationToken: "", confirmed: true }, { new: true }
+                        ).then( user => user ? res.json({ user: user.toAuthJSON() }) : res.status(400).json({}) );
+});
 
 export default router;
