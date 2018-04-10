@@ -5,9 +5,11 @@ import User from '../models/User';
 const router = express.Router();
     
 router.post("/", (req, res) => 
-{
+{   console.log('server/route/auth.js/credentials req=',req); //---visible only in sonsole of server-command prompt
+    console.log('server/route/auth.js/credentials res=',res);
+    console.log('server/route/auth.js/credentials req.body=',req.body);
     const { credentials } = req.body;
-    console.log('credentials',req.body);
+    
     User.findOne({ email: credentials.email }).then(user => 
     {  if (user && user.isValidPassword(credentials.password))   //isvalid is defined in model user
         { //console.log('user found',credentials);
