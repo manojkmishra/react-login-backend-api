@@ -30,6 +30,11 @@ schema.methods.generateConfirmationUrl = function generateConfirmationUrl() {
     return `${process.env.HOST}/confirmation/${this.confirmationToken}`; //------this one is for signup process--send link to confirm
   };
 
+schema.methods.generateResetPasswordLink = function generateResetPasswordLink() 
+ {  return `${process.env.HOST}/reset_password/${this.generateResetPasswordToken()}`;  };
+schema.methods.generateResetPasswordToken = function generateResetPasswordToken() 
+{    return jwt.sign( { _id: this._id }, process.env.JWT_SECRET, { expiresIn: "1h" }   );  };
+
 schema.plugin(uniqueValidator, { message: "This email is already taken" });//---------used during new user creation
 
 export default mongoose.model('User', schema)

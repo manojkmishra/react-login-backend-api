@@ -11,20 +11,21 @@ function setup()
 
 }
 
-export function sendConfirmationEmail(user) {
-    const tranport = setup();
-    const email = {
-      from,
-      to: user.email,
-      subject: "Welcome to Bookworm",
-      text: `
-      Welcome to Bookworm. Please, confirm your email.
-      ${user.generateConfirmationUrl()}
-      `
-    };
-  
-    tranport.sendMail(email) .then(res => { console.log('sent', res) ; })
-                             .catch(e => { console.log('not sent- ',e); });
+export function sendConfirmationEmail(user) 
+{   const tranport = setup();
+    const email = { from, to: user.email, subject: "Welcome to Bookworm", 
+                    text: `Welcome to Bookworm. Please, confirm your email.${user.generateConfirmationUrl()}`
+                  };
+      tranport.sendMail(email) .then(res => { console.log('sent', res) ; })
+                               .catch(e => { console.log('not sent- ',e); });
     
-  }
+}
+
+export function sendResetPasswordEmail(user) 
+{  const tranport = setup();
+   const email = {    from,    to: user.email,    subject: "Reset Password",
+                     text: `To reset password follow this link    ${user.generateResetPasswordLink()}`
+                };
+   tranport.sendMail(email);
+}
 
