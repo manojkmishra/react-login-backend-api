@@ -6,6 +6,7 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import Promise from 'bluebird';
 import users from "./routes/users";
+import books from "./routes/books";
 
 dotenv.config();
 const app = express();
@@ -15,6 +16,7 @@ mongoose.Promise=Promise;
 mongoose.connect(process.env.MONGODB_URL);
 
 app.use('/api/auth', auth);
+app.use("/api/books", books);
 app.use("/api/users", users); //---mount the new api imported above
 //app.post('/api/auth', (req,res)=>{ res.status(400).json( {errors: {global: "Invalid UN PASS"}}  );  });
 
