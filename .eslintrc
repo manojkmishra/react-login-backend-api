@@ -13,6 +13,7 @@
     },
     "rules": {
       "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-      "no-underscore-dangle": [1, { "allow": ["_id"] }]
+      "no-underscore-dangle": [1, { "allow": ["_id"] }],
+      "experimentalObjectRestSpread": true
     }
   }

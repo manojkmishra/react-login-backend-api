@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import User from "../models/User";
 
-export default (req, res, next) => 
+export default (req, res, next) => //this req will have our current user
 { const header = req.headers.authorization;
   let token;
   if (header) token = header.split(" ")[1];

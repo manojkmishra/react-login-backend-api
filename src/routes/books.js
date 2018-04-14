@@ -3,9 +3,22 @@ import authenticate from "../middlewares/authenticate";
 
 import request from "request-promise";
 import { parseString } from "xml2js";
+import Book from "../models/Book";
+import parseErrors from "../utils/parseErrors";
 
 const router = express.Router();
 router.use(authenticate);
+
+
+router.get("/", (req, res) => {
+    Book.find({ userId: req.currentUser._id }).then(books => res.json({ books }));
+  });
+  
+  router.post("/", (req, res) => {
+    Book.create({ ...req.body.book, userId: req.currentUser._id })
+      .then(book => res.json({ book }))
+      .catch(err => res.status(400).json({ errors: parseErrors(err.errors) }));
+  });
 
 
 router.get("/search", (req, res) => 
@@ -26,6 +39,17 @@ router.get("/search", (req, res) =>
                                     })
                         )
                 )
+ });
+
+ router.get("/fetchPages", (req, res) => 
+ {  const goodreadsId = req.query.goodreadsId;
+    request.get(`https://www.goodreads.com/book/show.xml?key=${process.env.GOODREADS_KEY}&id=${goodreadsId}`)
+      .then(result =>parseString(result, (err, goodreadsResult) => 
+                { const numPages = goodreadsResult.GoodreadsResponse.book[0].num_pages[0];
+                const pages = numPages ? parseInt(numPages, 10) : 0;
+                res.json({  pages  });    
+                })
+           );
  });
       //});
     //  });
